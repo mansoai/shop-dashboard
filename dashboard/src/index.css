@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: #FAF7F1;
+  --surface: #FFFFFF;
+  --border: #E4DDD0;
+  --text: #2B2620;
+  --text-muted: #7A7268;
+  --accent: #B8720A;
+  --accent-hover: #9C5F08;
+  --accent-soft: #F5E6CE;
+  --success: #3F6B4F;
+  --success-soft: #E1EBE3;
+  --danger: #B23A3A;
+  --danger-soft: #F5E1E1;
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+button, input, textarea, select { font-family: inherit; font-size: 15px; }
+a { color: var(--accent); }
+
+.app-shell { max-width: 780px; margin: 0 auto; padding: 24px 20px 80px; }
+
+.top-bar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.top-bar h1 { font-size: 26px; }
+.top-bar .greeting { color: var(--text-muted); font-size: 14px; }
+
+.tabs { display: flex; gap: 6px; margin-bottom: 24px; border-bottom: 1px solid var(--border); }
+
+.tab {
+  padding: 10px 16px;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin-bottom: 12px;
+}
+
+.card-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+.card-title { font-weight: 600; font-size: 16px; margin-bottom: 2px; }
+.card-sub { color: var(--text-muted); font-size: 14px; line-height: 1.5; }
+
+.price-tag {
+  background: var(--accent-soft);
+  color: var(--accent-hover);
+  font-weight: 700;
+  font-size: 13px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.card-actions { display: flex; gap: 8px; margin-top: 12px; }
+
+button.btn {
+  border: none;
+  border-radius: 8px;
+  padding: 9px 16px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+button.btn:hover { opacity: 0.85; }
+button.btn:active { opacity: 0.7; }
+
+.btn-primary { background: var(--accent); color: white; }
+.btn-secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border) !important; }
+.btn-danger { background: var(--danger-soft); color: var(--danger); }
+.btn-block { width: 100%; }
+
+.empty-state { text-align: center; padding: 48px 20px; color: var(--text-muted); }
+.empty-state h3 { color: var(--text); margin-bottom: 6px; font-size: 18px; }
+
+form.stack { display: flex; flex-direction: column; gap: 12px; }
+
+label { font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 4px; display: block; }
+
+input, textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+input:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+textarea { resize: vertical; min-height: 70px; }
+
+.login-screen { min-height: 100%; display: flex; align-items: center; justify-content: center; padding: 20px; }
+
+.login-card {
+  width: 100%;
+  max-width: 360px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 32px 28px;
+}
+
+.login-card h1 { font-size: 24px; margin-bottom: 4px; }
+.login-card p.tagline { color: var(--text-muted); font-size: 14px; margin-bottom: 24px; }
+
+.error-msg {
+  background: var(--danger-soft);
+  color: var(--danger);
+  font-size: 13px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-top: 4px;
+}
+
+.status-badge { font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px; }
+.status-pending { background: var(--accent-soft); color: var(--accent-hover); }
+.status-confirmed, .status-delivered { background: var(--success-soft); color: var(--success); }
+.status-cancelled { background: var(--danger-soft); color: var(--danger); }
+
+.logout-link { background: none; border: none; color: var(--text-muted); font-size: 13px; cursor: pointer; text-decoration: underline; }
