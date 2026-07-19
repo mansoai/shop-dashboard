@@ -46,6 +46,9 @@ export default function OrdersPage({ merchant }) {
 
       if (!response.ok) {
         setErrorMsg(result.error || 'Could not update status.');
+      } else if (result.notified === false) {
+        setErrorMsg(`✅ Status updated, but the customer was NOT notified — they haven't messaged in over 24 hours (WhatsApp's rule for free-form messages). Consider reaching out to them another way.`);
+        loadOrders();
       } else {
         loadOrders();
       }
