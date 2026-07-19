@@ -5,7 +5,7 @@ const STATUS_OPTIONS = ['pending', 'confirmed', 'preparing', 'delivered', 'cance
 
 // The backend API that also sends the customer a WhatsApp notification
 // when status changes - set this in your .env file.
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
 
 export default function OrdersPage({ merchant }) {
   const [orders, setOrders] = useState([]);
