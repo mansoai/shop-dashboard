@@ -53,7 +53,11 @@ export default function SettingsPage({ merchant, onMerchantUpdated }) {
     setPwSaving(false);
 
     if (error) {
-      setPwMsg('❌ Could not update password: ' + error.message);
+      if (error.message.toLowerCase().includes('session')) {
+        setPwMsg('⚠️ Your login session has expired. Please sign out and sign back in, then try again.');
+      } else {
+        setPwMsg('❌ Could not update password: ' + error.message);
+      }
     } else {
       setPwMsg('✅ Password updated!');
       setNewPassword('');
