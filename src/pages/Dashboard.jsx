@@ -4,6 +4,7 @@ import ProductsPage from './ProductsPage';
 import FaqsPage from './FaqsPage';
 import OrdersPage from './OrdersPage';
 import SettingsPage from './SettingsPage';
+import CustomersPage from './CustomersPage';
 
 export default function Dashboard({ merchant, onMerchantUpdated }) {
   const [tab, setTab] = useState('products');
@@ -22,12 +23,14 @@ export default function Dashboard({ merchant, onMerchantUpdated }) {
         <button className={`tab ${tab === 'products' ? 'active' : ''}`} onClick={() => setTab('products')}>Products</button>
         <button className={`tab ${tab === 'faqs' ? 'active' : ''}`} onClick={() => setTab('faqs')}>FAQs</button>
         <button className={`tab ${tab === 'orders' ? 'active' : ''}`} onClick={() => setTab('orders')}>Orders</button>
+        <button className={`tab ${tab === 'customers' ? 'active' : ''}`} onClick={() => setTab('customers')}>Customers</button>
         <button className={`tab ${tab === 'settings' ? 'active' : ''}`} onClick={() => setTab('settings')}>Settings</button>
       </div>
 
       {tab === 'products' && <ProductsPage merchant={merchant} />}
       {tab === 'faqs' && <FaqsPage merchant={merchant} />}
       {tab === 'orders' && <OrdersPage merchant={merchant} />}
+      {tab === 'customers' && <CustomersPage merchant={merchant} />}
       {tab === 'settings' && <SettingsPage merchant={merchant} onMerchantUpdated={onMerchantUpdated} />}
     </div>
   );
