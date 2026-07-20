@@ -69,5 +69,5 @@ export default function App() {
     );
   }
 
-  return <Dashboard merchant={merchant} />;
+  return <Dashboard merchant={merchant} onMerchantUpdated={loadMerchant} />;
 }

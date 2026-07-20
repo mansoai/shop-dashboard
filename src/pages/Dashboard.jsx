@@ -3,8 +3,9 @@ import { supabase } from '../lib/supabase';
 import ProductsPage from './ProductsPage';
 import FaqsPage from './FaqsPage';
 import OrdersPage from './OrdersPage';
+import SettingsPage from './SettingsPage';
 
-export default function Dashboard({ merchant }) {
+export default function Dashboard({ merchant, onMerchantUpdated }) {
   const [tab, setTab] = useState('products');
 
   return (
@@ -21,11 +22,13 @@ export default function Dashboard({ merchant }) {
         <button className={`tab ${tab === 'products' ? 'active' : ''}`} onClick={() => setTab('products')}>Products</button>
         <button className={`tab ${tab === 'faqs' ? 'active' : ''}`} onClick={() => setTab('faqs')}>FAQs</button>
         <button className={`tab ${tab === 'orders' ? 'active' : ''}`} onClick={() => setTab('orders')}>Orders</button>
+        <button className={`tab ${tab === 'settings' ? 'active' : ''}`} onClick={() => setTab('settings')}>Settings</button>
       </div>
 
       {tab === 'products' && <ProductsPage merchant={merchant} />}
       {tab === 'faqs' && <FaqsPage merchant={merchant} />}
       {tab === 'orders' && <OrdersPage merchant={merchant} />}
+      {tab === 'settings' && <SettingsPage merchant={merchant} onMerchantUpdated={onMerchantUpdated} />}
     </div>
   );
 }
