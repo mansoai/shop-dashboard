@@ -75,6 +75,9 @@ export default function OrdersPage({ merchant }) {
 
       if (!response.ok) {
         setErrorMsg(result.error || 'Could not update payment status.');
+      } else if (paymentStatus === 'paid' && result.notified === false) {
+        setErrorMsg(`✅ Marked as paid, but the customer was NOT notified — they haven't messaged in over 24 hours.`);
+        loadOrders();
       } else {
         loadOrders();
       }
