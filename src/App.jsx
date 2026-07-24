@@ -3,8 +3,15 @@ import { supabase } from './lib/supabase';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
+import PrivacyPage from './pages/PrivacyPage';
+import AboutPage from './pages/AboutPage';
 
 export default function App() {
+  // Public pages (no login required) - checked first, before any auth logic
+  const path = window.location.pathname;
+  if (path === '/privacy') return <PrivacyPage />;
+  if (path === '/about') return <AboutPage />;
+
   const [session, setSession] = useState(null);
   const [merchant, setMerchant] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -24,9 +31,6 @@ export default function App() {
     return () => listener.subscription.unsubscribe();
   }, []);
 
-  // Always reads the CURRENT session fresh (not a possibly-stale closure value),
-  // so this is safe to call from anywhere, at any time, including right after
-  // signup creates a new shop record.
   const loadMerchant = useCallback(async () => {
     const { data: { session: freshSession } } = await supabase.auth.getSession();
     if (!freshSession) return null;
