@@ -7,7 +7,7 @@ export default function AboutPage() {
 
       <div className="card" style={{ lineHeight: 1.7 }}>
         <p>
-          [YOUR COMPANY NAME] builds AI-powered WhatsApp assistants for small
+          Manso AI builds AI-powered WhatsApp assistants for small
           businesses in Ghana and beyond. Our platform lets shop owners
           automatically answer customer questions, take orders, and manage
           their business — all through WhatsApp, the app their customers
@@ -26,8 +26,8 @@ export default function AboutPage() {
 
         <h3 style={{ marginTop: 20 }}>Contact us</h3>
         <p>
-          Email: [YOUR CONTACT EMAIL]<br />
-          [YOUR BUSINESS ADDRESS, if applicable]
+          Email: mahenkora0@gmail.com<br />
+          Kumasi, Ghana
         </p>
       </div>
     </div>

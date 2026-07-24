@@ -6,10 +6,10 @@ export default function PrivacyPage() {
       </div>
 
       <div className="card" style={{ lineHeight: 1.7 }}>
-        <p><em>Last updated: [DATE — fill this in]</em></p>
+        <p><em>Last updated: July 24, 2026</em></p>
 
         <p>
-          [YOUR COMPANY NAME] ("we", "us", "our") provides an AI-powered WhatsApp
+          Manso AI ("we", "us", "our") provides an AI-powered WhatsApp
           assistant platform that helps small businesses communicate with their
           customers, manage orders, and answer questions automatically. This
           policy explains what information we collect, how we use it, and your
@@ -64,9 +64,9 @@ export default function PrivacyPage() {
 
         <h3 style={{ marginTop: 20 }}>Contact us</h3>
         <p>
-          [YOUR COMPANY NAME]<br />
-          Email: [YOUR CONTACT EMAIL]<br />
-          [YOUR BUSINESS ADDRESS, if applicable]
+          Manso AI<br />
+          Email: mahenkora0@gmail.com<br />
+          Kumasi, Ghana
         </p>
       </div>
     </div>
