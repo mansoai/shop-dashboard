@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 
 export default function SettingsPage({ merchant, onMerchantUpdated }) {
@@ -11,6 +11,22 @@ export default function SettingsPage({ merchant, onMerchantUpdated }) {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [pwMsg, setPwMsg] = useState('');
   const [pwSaving, setPwSaving] = useState(false);
+
+  const [planInfo, setPlanInfo] = useState(null);
+  const [planLoading, setPlanLoading] = useState(true);
+
+  useEffect(() => { loadPlan(); }, [merchant]);
+
+  async function loadPlan() {
+    setPlanLoading(true);
+    const { data } = await supabase
+      .from('plans')
+      .select('*')
+      .eq('name', (merchant.plan || 'free').toLowerCase())
+      .maybeSingle();
+    setPlanInfo(data);
+    setPlanLoading(false);
+  }
 
   async function handleShopSave(e) {
     e.preventDefault();
@@ -67,6 +83,30 @@ export default function SettingsPage({ merchant, onMerchantUpdated }) {
 
   return (
     <div>
+      <div className="card">
+        <h3 style={{ marginBottom: 14 }}>Your plan</h3>
+        {planLoading ? (
+          <p className="card-sub">Loading…</p>
+        ) : planInfo ? (
+          <div>
+            <div className="card-row">
+              <div>
+                <div className="card-title" style={{ textTransform: 'capitalize' }}>{planInfo.name}</div>
+                <div className="card-sub">{planInfo.description}</div>
+              </div>
+              <span className="price-tag">
+                {Number(planInfo.price_ghs) === 0 ? 'Free' : `GH₵${planInfo.price_ghs}/mo`}
+              </span>
+            </div>
+            <div className="card-sub" style={{ marginTop: 10 }}>
+              Products: {planInfo.max_products ?? 'Unlimited'} · Orders/month: {planInfo.max_orders_per_month ?? 'Unlimited'}
+            </div>
+          </div>
+        ) : (
+          <p className="card-sub">No plan info found for "{merchant.plan || 'free'}".</p>
+        )}
+      </div>
+
       <div className="card">
         <h3 style={{ marginBottom: 14 }}>Shop details</h3>
         <form className="stack" onSubmit={handleShopSave}>
