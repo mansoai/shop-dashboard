@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { supabase } from '../lib/supabase';
 
-export default function Login({ onSwitchToSignup }) {
+export default function Login({ onSwitchToSignup, onSwitchToForgotPassword }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -49,7 +49,19 @@ export default function Login({ onSwitchToSignup }) {
             {loading ? 'Signing in...' : 'Sign in'}
           </button>
         </form>
-        <p style={{ marginTop: 16, textAlign: 'center', fontSize: 13 }}>
+
+        <p style={{ marginTop: 12, textAlign: 'center', fontSize: 13 }}>
+          <button
+            type="button"
+            className="logout-link"
+            style={{ textDecoration: 'underline', color: 'var(--text-muted)' }}
+            onClick={onSwitchToForgotPassword}
+          >
+            Forgot password?
+          </button>
+        </p>
+
+        <p style={{ marginTop: 8, textAlign: 'center', fontSize: 13 }}>
           New here?{' '}
           <button
             type="button"

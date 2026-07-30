@@ -5,17 +5,20 @@ import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import PrivacyPage from './pages/PrivacyPage';
 import AboutPage from './pages/AboutPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
 
 export default function App() {
   // Public pages (no login required) - checked first, before any auth logic
   const path = window.location.pathname;
   if (path === '/privacy') return <PrivacyPage />;
   if (path === '/about') return <AboutPage />;
+  if (path === '/reset-password') return <ResetPasswordPage />;
 
   const [session, setSession] = useState(null);
   const [merchant, setMerchant] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [showSignup, setShowSignup] = useState(false);
+  const [authView, setAuthView] = useState('login'); // 'login' | 'signup' | 'forgotPassword'
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -51,9 +54,18 @@ export default function App() {
   if (loading) return null;
 
   if (!session) {
-    return showSignup
-      ? <Signup onSwitchToLogin={() => setShowSignup(false)} onMerchantCreated={loadMerchant} />
-      : <Login onSwitchToSignup={() => setShowSignup(true)} />;
+    if (authView === 'signup') {
+      return <Signup onSwitchToLogin={() => setAuthView('login')} onMerchantCreated={loadMerchant} />;
+    }
+    if (authView === 'forgotPassword') {
+      return <ForgotPasswordPage onSwitchToLogin={() => setAuthView('login')} />;
+    }
+    return (
+      <Login
+        onSwitchToSignup={() => setAuthView('signup')}
+        onSwitchToForgotPassword={() => setAuthView('forgotPassword')}
+      />
+    );
   }
 
   if (!merchant) {
