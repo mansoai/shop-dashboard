@@ -85,5 +85,21 @@ export default function App() {
     );
   }
 
+  if (merchant.is_active === false) {
+    return (
+      <div className="login-screen">
+        <div className="login-card">
+          <h1>Account deactivated</h1>
+          <p className="tagline">
+            This account has been deactivated. Your data is safe. Contact support if you'd like to reactivate it.
+          </p>
+          <button className="btn btn-secondary btn-block" onClick={() => supabase.auth.signOut()}>
+            Sign out
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return <Dashboard merchant={merchant} onMerchantUpdated={loadMerchant} />;
 }

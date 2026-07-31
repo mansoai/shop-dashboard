@@ -15,6 +15,10 @@ export default function SettingsPage({ merchant, onMerchantUpdated }) {
   const [planInfo, setPlanInfo] = useState(null);
   const [planLoading, setPlanLoading] = useState(true);
 
+  const [confirmText, setConfirmText] = useState('');
+  const [deactivating, setDeactivating] = useState(false);
+  const [deactivateMsg, setDeactivateMsg] = useState('');
+
   useEffect(() => { loadPlan(); }, [merchant]);
 
   async function loadPlan() {
@@ -79,6 +83,25 @@ export default function SettingsPage({ merchant, onMerchantUpdated }) {
       setNewPassword('');
       setConfirmPassword('');
     }
+  }
+
+  async function handleDeactivate() {
+    setDeactivateMsg('');
+    setDeactivating(true);
+
+    const { error } = await supabase
+      .from('merchants')
+      .update({ is_active: false })
+      .eq('id', merchant.id);
+
+    if (error) {
+      setDeactivateMsg('❌ Could not deactivate: ' + error.message);
+      setDeactivating(false);
+      return;
+    }
+
+    // Sign out immediately so they can't keep using a "deactivated" account
+    await supabase.auth.signOut();
   }
 
   return (
@@ -164,6 +187,30 @@ export default function SettingsPage({ merchant, onMerchantUpdated }) {
             {pwSaving ? 'Updating...' : 'Update password'}
           </button>
         </form>
+      </div>
+
+      <div className="card" style={{ borderColor: 'var(--danger)' }}>
+        <h3 style={{ marginBottom: 6, color: 'var(--danger)' }}>Deactivate account</h3>
+        <p className="card-sub" style={{ marginBottom: 14 }}>
+          This blocks you from logging in and stops your WhatsApp assistant from replying to customers.
+          Your products, orders, and customer history are kept safe — contact support if you ever want to
+          reactivate.
+        </p>
+        <label>Type DELETE to confirm</label>
+        <input
+          value={confirmText}
+          onChange={(e) => setConfirmText(e.target.value)}
+          placeholder="DELETE"
+          style={{ marginBottom: 10 }}
+        />
+        {deactivateMsg && <div className="error-msg" style={{ marginBottom: 10 }}>{deactivateMsg}</div>}
+        <button
+          className="btn btn-danger"
+          disabled={confirmText !== 'DELETE' || deactivating}
+          onClick={handleDeactivate}
+        >
+          {deactivating ? 'Deactivating...' : 'Deactivate my account'}
+        </button>
       </div>
     </div>
   );
