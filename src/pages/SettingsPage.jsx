@@ -193,8 +193,8 @@ export default function SettingsPage({ merchant, onMerchantUpdated }) {
         <h3 style={{ marginBottom: 6, color: 'var(--danger)' }}>Deactivate account</h3>
         <p className="card-sub" style={{ marginBottom: 14 }}>
           This blocks you from logging in and stops your WhatsApp assistant from replying to customers.
-          Your products, orders, and customer history are kept safe — contact support if you ever want to
-          reactivate.
+          Your products, orders, and customer history are kept safe — you can reactivate anytime by
+          logging back in.
         </p>
         <label>Type DELETE to confirm</label>
         <input

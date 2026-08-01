@@ -86,20 +86,54 @@ export default function App() {
   }
 
   if (merchant.is_active === false) {
-    return (
-      <div className="login-screen">
-        <div className="login-card">
-          <h1>Account deactivated</h1>
-          <p className="tagline">
-            This account has been deactivated. Your data is safe. Contact support if you'd like to reactivate it.
-          </p>
-          <button className="btn btn-secondary btn-block" onClick={() => supabase.auth.signOut()}>
-            Sign out
-          </button>
-        </div>
-      </div>
-    );
+    return <DeactivatedScreen merchant={merchant} onMerchantUpdated={loadMerchant} />;
   }
 
   return <Dashboard merchant={merchant} onMerchantUpdated={loadMerchant} />;
+}
+
+function DeactivatedScreen({ merchant, onMerchantUpdated }) {
+  const [reactivating, setReactivating] = useState(false);
+  const [msg, setMsg] = useState('');
+
+  async function handleReactivate() {
+    setMsg('');
+    setReactivating(true);
+
+    const { error } = await supabase
+      .from('merchants')
+      .update({ is_active: true })
+      .eq('id', merchant.id);
+
+    setReactivating(false);
+
+    if (error) {
+      setMsg('❌ Could not reactivate: ' + error.message);
+      return;
+    }
+
+    await onMerchantUpdated?.();
+  }
+
+  return (
+    <div className="login-screen">
+      <div className="login-card">
+        <h1>Account deactivated</h1>
+        <p className="tagline">
+          This account has been deactivated. Your data is safe - you can reactivate anytime.
+        </p>
+        {msg && <div className="error-msg" style={{ marginBottom: 12 }}>{msg}</div>}
+        <button className="btn btn-primary btn-block" onClick={handleReactivate} disabled={reactivating}>
+          {reactivating ? 'Reactivating...' : 'Reactivate my account'}
+        </button>
+        <button
+          className="btn btn-secondary btn-block"
+          style={{ marginTop: 8 }}
+          onClick={() => supabase.auth.signOut()}
+        >
+          Sign out
+        </button>
+      </div>
+    </div>
+  );
 }
